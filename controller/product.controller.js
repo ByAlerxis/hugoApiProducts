@@ -29,12 +29,26 @@ try {
         }
       );
     }
-  }
+  };
 
   productController.postProduct = async (req, res) => {
     if (Connection) {
       await connection.query(
         "INSERT INTO products(PD_name, PD_descrip, PD_price, PD_code) VALUES ('"+req.body.PD_name+"', '"+req.body.PD_descrip+"', '"+req.body.PD_price+"', '"+req.body.PD_code+"');",
+        (err, rows) => {
+          if (err) {
+          } else {
+            res.status(200).json(rows);
+          }
+        }
+      );
+    }
+  }
+
+  productController.getAllProducts = async (req, res) => {
+    if (Connection) {
+      await connection.query(
+        "SELECT * FROM products;",
         (err, rows) => {
           if (err) {
           } else {
